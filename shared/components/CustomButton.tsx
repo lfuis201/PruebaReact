@@ -11,7 +11,7 @@ const CustomButton = ({ icon, text, onClick, className = '' }: CustomButtonProps
   return (
     <button
       onClick={onClick}
-      className={`w-full flex items-center justify-center space-x-2  ${className}`}
+      className={`w-full flex space-x-2  ${className}`}
     >
       {/* Mostrar el icono si se pasa */}
       {icon && <span className="mr-6">{icon}</span>}

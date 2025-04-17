@@ -1,28 +1,28 @@
 // features/auth/ui/pages/LoginPage.tsx
 import LoginForm from "../components/LoginForm";
-import { loginUser } from "../../domain/usecases/loginUser";
 import { useState } from "react";
-import { authRepository } from "features/auth/infra/authRepository";
 import { useNavigate } from "react-router";
+import { useAuth } from "shared/context/AuthContext";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { login } = useAuth(); // <--- 🔥 trae el login desde el contexto
   const [error, setError] = useState("");
+
 
   const handleLogin = async (email: string, password: string) => {
     try {
-      const user: any = await loginUser(email, password, authRepository);
-      localStorage.setItem("token", user.token);
+      await login(email, password); // <-- 🔥 Ya se encarga de setUser, localStorage, etc.
       navigate("/dashboard");
     } catch (err: any) {
-      setError("Credenciales inválidas");
+      setError(err.message || "Error al iniciar sesión");
     }
   };
 
   return (
     <div className="flex h-screen">
-      <div className="flex-1 bg-gradient-to-b from-blue-500 to-blue-800 text-white flex flex-col justify-center items-center p-10">
-        <div className="w-full max-w-sm text-left">
+      <div className="hidden md:flex flex-1 bg-gradient-to-b from-blue-500 to-blue-800 text-white flex-col justify-center items-center p-10">
+      <div className="w-full max-w-sm text-left">
           <h1 className="text-4xl font-bold text-left">GoFinance</h1>
           <p className="mt-2 text-lg text-left mb-6">
             The most popular peer to peer lending at SEA
@@ -46,8 +46,11 @@ export default function LoginPage() {
           <p className="text-zinc-600">Welcome Back</p>
         </div>
 
-        {error && <p className="text-red-600 mt-2">{error}</p>}
         <LoginForm onSubmit={handleLogin} />
+
+        {error && <p className="text-red-600 mt-2">{error}</p>}
+
+
       </div>
     </div>
   );

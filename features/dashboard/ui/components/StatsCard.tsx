@@ -3,7 +3,7 @@ type StatsCardProps = {
     title: string;
     value: string;
     icon: React.ReactNode;
-    iconBg?: string; // Nueva prop para color de fondo del ícono
+    iconBg?: string;
     changeText: string;
     isPositive?: boolean;
   };
@@ -13,7 +13,7 @@ const StatsCard = ({
     title,
     value,
     icon,
-    iconBg = "bg-blue-100", // Valor por defecto
+    iconBg = "bg-blue-100",
     changeText,
     isPositive = true,
 }: StatsCardProps) => {

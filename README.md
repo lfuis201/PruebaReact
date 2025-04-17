@@ -1,87 +1,94 @@
-# Welcome to React Router!
+## Instalacion
 
-A modern, production-ready template for building full-stack React applications using React Router.
+Instalar dependencias
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
-
-## Features
-
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
-
-## Getting Started
-
-### Installation
-
-Install the dependencies:
-
-```bash
 npm install
-```
-
-### Development
-
-Start the development server with HMR:
+### Desarrollo
 
 ```bash
 npm run dev
 ```
-
 Your application will be available at `http://localhost:5173`.
 
-## Building for Production
 
-Create a production build:
+## 🔐 Autenticación - DummyJSON API
 
-```bash
-npm run build
-```
+Esta app utiliza [DummyJSON](https://dummyjson.com/docs/auth) para simular el flujo de autenticación real en desarrollo.
 
-## Deployment
+### 🔑 Credenciales de prueba
 
-### Docker Deployment
+Puedes usar las siguientes credenciales para iniciar sesión:
 
-To build and run using Docker:
+👤 Usuario: emilys
+🔒 Contraseña: emilyspass
 
-```bash
-docker build -t my-app .
+# **Estructura de Carpetas**
 
-# Run the container
-docker run -p 3000:3000 my-app
-```
+Este proyecto está organizado siguiendo una arquitectura **modular basada en features**. Cada funcionalidad principal de la app (auth, tasks, dashboard, etc) tiene su propio espacio aislado para su dominio, infraestructura y UI. Esto facilita la escalabilidad, el testing y el mantenimiento.
 
-The containerized application can be deployed to any platform that supports Docker, including:
+### `app/`
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
+Contiene la configuración global de la aplicación, como:
 
-### DIY Deployment
+- React Router
+- Context Providers
+- Temas o estilos globales
+- Configuración inicial de la app
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
+### `shared/`
 
-Make sure to deploy the output of `npm run build`
+Contiene todo lo **reutilizable** entre features.
 
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
+#### `components/`
 
-## Styling
+Componentes UI atómicos o genéricos, como:
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+- Botones (`Button`)
+- Inputs (`TextInput`)
+- Modales (`Modal`)
 
----
+### `features/`
 
-Built with ❤️ using React Router.
+Contiene todos los **módulos funcionales** de la app. Cada feature está separada con su propia arquitectura interna:
+
+#### Estructura interna de un feature:
+
+Cada módulo dentro de `features/` sigue un patrón de arquitectura limpia (Clean Architecture adaptada al frontend), separando claramente la lógica de negocio, la infraestructura y la UI:
+
+### 🔍 Descripción de carpetas
+
+
+| Carpeta          | Propósito                                                                                         |
+| ---------------- | -------------------------------------------------------------------------------------------------- |
+| `domain/`        | Contiene entidades, interfaces, y casos de uso del dominio. Sin dependencias externas.             |
+| `infra/`         | Implementación concreta de repositorios, API clients.                                             |
+| `ui/pages/`      | Páginas completas que representan rutas. Se encargan de orquestar lógica y componer componentes. |
+| `ui/components/` | Componentes específicos del feature. No deben mezclarse con componentes de otros features.        |
+
+## API Layer: Axios + Manejo Global de Errores
+
+La aplicación utiliza una **instancia personalizada de Axios** para centralizar la configuración de las peticiones HTTP y estandarizar el manejo de errores.
+
+
+### 🧩 axiosInstance
+
+📍 Ruta: `src/shared/api/axiosInstance.ts`
+
+Esta instancia cuenta con:
+
+- ✅ `baseURL` global configurada.
+- ✅ Headers por defecto (`application/json`).
+- ✅ Interceptor que inyecta automáticamente el token JWT si está presente en `localStorage`.
+- ✅ Interceptor de respuestas que transforma errores técnicos en mensajes amigables.
+
+### 
+
+### ❌ Manejo de errores
+
+📍 Ruta: `src/shared/api/errorHandler.ts`
+
+Contiene la función `handleApiError(error)` que:
+
+* Clasifica errores por código HTTP (`400`, `401`, `404`, `500`, etc).
+* Devuelve un objeto `Error` con un mensaje claro para el usuario.
+* Mejora la experiencia de usuario y facilita el debug.

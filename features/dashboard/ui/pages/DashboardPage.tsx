@@ -5,21 +5,19 @@ import SalesChart from "../components/SalesChart";
 
 const DashboardPage = () => {
   return (
-    <div>
-      {/* Navbar en la parte superior */}
+    <div className="flex flex-col h-screen max-w-screen overflow-hidden">
       <Navbar />
 
-      <div className="flex">
-        <Sidebar />
+      <div className="flex flex-1 overflow-hidden">
+        <div className="hidden md:block">
+          <Sidebar />
+        </div>
 
-        <main className="flex-1 p-6 bg-zinc-100">
+        <main className="flex-1 p-4 sm:p-6 bg-zinc-100 overflow-y-auto">
           <header className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold">Dashboard</h2>
-           
           </header>
 
-          {/* Estadísticas */}
-          {/* ✅ Cards de estadísticas */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <StatsCard
               title="Total Users"
@@ -45,11 +43,18 @@ const DashboardPage = () => {
               iconBg="bg-green-100"
               icon={
                 <svg
+                  xmlns="http://www.w3.org/2000/svg"
                   className="w-10 h-10 text-green-500"
-                  fill="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4s-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                  <path
+                    fill="none"
+                    stroke="#059669"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 16.008V7.99a1.98 1.98 0 0 0-1-1.717l-7-4.008a2.02 2.02 0 0 0-2 0L4 6.273c-.619.355-1 1.01-1 1.718v8.018c0 .709.381 1.363 1 1.717l7 4.008a2.02 2.02 0 0 0 2 0l7-4.008c.619-.355 1-1.01 1-1.718M12 22V12m0 0l8.73-5.04m-17.46 0L12 12"
+                  />
                 </svg>
               }
             />
@@ -61,11 +66,14 @@ const DashboardPage = () => {
               iconBg="bg-yellow-100"
               icon={
                 <svg
+                  xmlns="http://www.w3.org/2000/svg"
                   className="w-10 h-10 text-yellow-500"
-                  fill="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm0-2c1.66 0 3-1.34 3-3S8.66 10 7 10s-3 1.34-3 3 1.34 3 3 3zm10 2c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zm0-2c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3z" />
+                  <path
+                    fill="#eab308"
+                    d="m16 11.78l4.24-7.33l1.73 1l-5.23 9.05l-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"
+                  />
                 </svg>
               }
             />
@@ -77,17 +85,18 @@ const DashboardPage = () => {
               iconBg="bg-red-100"
               icon={
                 <svg
+                  xmlns="http://www.w3.org/2000/svg"
                   className="w-10 h-10 text-red-500"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
+                  viewBox="0 0 224 384"
                 >
-                  <path d="M12 4v1h-1.5c-1.66 0-3 1.34-3 3h2c0-.55.45-1 1-1H12v4h-1c-.55 0-1 .45-1 1h-2c0 1.66 1.34 3 3 3H12v1h2v-1h1c1.66 0 3-1.34 3-3h-2c0 .55-.45 1-1 1h-1v-4h1c.55 0 1 .45 1 1h2c0-1.66-1.34-3-3-3h-1V4h-2z" />
+                  <path
+                    fill="#e11d48"
+                    d="M117 169q46 11 73 32t27 61q0 32-20.5 51T143 338v46H79v-46q-34-7-55.5-28T0 256h47q4 45 64 45q31 0 44-12t13-26q0-17-13.5-30T104 211Q4 187 4 123q0-29 21-49.5T79 46V0h64v47q32 8 49.5 30t18.5 51h-47q-2-45-53-45q-27 0-42.5 11T53 123q0 15 14 25.5t50 20.5"
+                  />
                 </svg>
               }
             />
-         
           </div>
-          {/* Gráfico de ventas */}
           <SalesChart />
         </main>
       </div>

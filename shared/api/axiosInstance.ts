@@ -26,19 +26,11 @@ axiosInstance.interceptors.request.use(
 
 // Interceptor para manejar errores de las respuestas
 axiosInstance.interceptors.response.use(
-  (response) => {
-    // Si la respuesta es exitosa, simplemente la retornamos
-    return response;
-  },
-  (error) => {
-    // Aquí usamos el manejador de errores
-    const handledError = handleApiError(error);
-    // Podemos hacer algo con el mensaje de error, por ejemplo, mostrarlo al usuario
-    console.error(handledError.message); // Puedes mostrar el mensaje en la UI o hacer logging
-
-    // Devolvemos el error para que lo maneje quien hizo la solicitud
-    return Promise.reject(handledError);
+  res => res,
+  err => {
+    // Convierte el error crudo en un Error con mensaje amigable
+    const friendlyError = handleApiError(err);
+    return Promise.reject(friendlyError);
   }
 );
-
 export default axiosInstance;

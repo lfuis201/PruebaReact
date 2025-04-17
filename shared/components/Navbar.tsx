@@ -1,4 +1,5 @@
 import CustomInput from "./CustomInput";
+import Dropdown from "./Dropdown";
 
 const Navbar = () => {
   return (
@@ -131,22 +132,8 @@ const Navbar = () => {
               <span className="text-foreground font-semibold">Moni Roy</span>
               <span className="text-muted-foreground">Admin</span>
             </div>
-            <button className="ml-4 text-muted-foreground hover:text-foreground">
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 9l6 6 6-6"
-                />
-              </svg>
-            </button>
+            <Dropdown />
+
           </div>
         </div>
       </div>
